@@ -7,6 +7,7 @@ const EmpCreate = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [active, setActive] = useState(true);
+  const [validation, setValidation] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -53,10 +54,15 @@ const EmpCreate = () => {
                     <div className="form-group">
                       <label>Name</label>
                       <input
+                        required
                         value={name}
+                        onMouseDown={(e) => setValidation(true)}
                         onChange={(e) => setName(e.target.value)}
                         className="form-control"
                       ></input>
+                      {name.length === 0 && validation && (
+                        <span className="text-danger">Enter The Name</span>
+                      )}
                     </div>
                   </div>
 

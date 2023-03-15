@@ -1,9 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const EmpListing = () => {
   //
   const [empData, setEmpData] = useState(null);
+  const navigate = useNavigate();
+
+  const LoadDetail = (id) => {
+    navigate("/employee/detail/" + id);
+  };
+
+  const LoadEdit = (id) => {};
+
+  const RemoveFuntion = (id) => {
+    if (window.confirm("Do You Want To Remove")) {
+      fetch("http://localhost:8000/employee/" + id, {
+        method: "DELETE",
+      })
+        .then((resp) => {
+          alert("Removed Successfully");
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  };
 
   useEffect(() => {
     fetch("http://localhost:8000/employee")
@@ -53,11 +75,32 @@ const EmpListing = () => {
                     <td>{item.email}</td>
                     <td>{item.phone}</td>
                     <td>
-                      <Link className="btn btn-secondary">Edit</Link>
+                      <a
+                        onClick={() => {
+                          LoadEdit(item.id);
+                        }}
+                        className="btn btn-secondary"
+                      >
+                        Edit
+                      </a>
                       &nbsp;&nbsp;
-                      <Link className="btn btn-danger">Remove</Link>
+                      <a
+                        onClick={() => {
+                          RemoveFuntion(item.id);
+                        }}
+                        className="btn btn-danger"
+                      >
+                        Remove
+                      </a>
                       &nbsp;&nbsp;
-                      <Link className="btn btn-primary">Details</Link>
+                      <a
+                        onClick={() => {
+                          LoadDetail(item.id);
+                        }}
+                        className="btn btn-primary"
+                      >
+                        Details
+                      </a>
                     </td>
                   </tr>
                 ))}
