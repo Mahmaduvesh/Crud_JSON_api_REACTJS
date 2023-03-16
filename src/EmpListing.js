@@ -10,7 +10,9 @@ const EmpListing = () => {
     navigate("/employee/detail/" + id);
   };
 
-  const LoadEdit = (id) => {};
+  const LoadEdit = (id) => {
+    navigate("/employee/edit/" + id);
+  };
 
   const RemoveFuntion = (id) => {
     if (window.confirm("Do You Want To Remove")) {
